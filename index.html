@@ -25,6 +25,7 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       overflow:hidden;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .wrap{
@@ -64,11 +65,33 @@
       animation: bloom 1.4s ease-out .2s forwards;
       cursor: pointer;
       user-select:none;
+      touch-action: manipulation; /* mobile friendly */
     }
 
     @keyframes bloom{
       from { transform: scale(0) rotate(-10deg); filter: blur(2px); }
       to   { transform: scale(1) rotate(0deg); filter: blur(0); }
+    }
+
+    /* Badge "Clique sur moi" */
+    .badge{
+      position:absolute;
+      top:-18px;
+      left:50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(255,255,255,.6);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: 0 10px 25px rgba(0,0,0,.12);
+      animation: pop 1.2s ease-in-out infinite;
+    }
+    @keyframes pop{
+      0%,100%{ transform: translateX(-50%) scale(1); }
+      50%{ transform: translateX(-50%) scale(1.06); }
     }
 
     .petal{
@@ -89,12 +112,12 @@
       to   { opacity:1; transform: translateY(0)  scale(1)  rotate(var(--r)); }
     }
 
-    .petal:nth-child(1){ --r: 0deg;   animation-delay:.25s; }
-    .petal:nth-child(2){ --r: 60deg;  animation-delay:.32s; }
-    .petal:nth-child(3){ --r: 120deg; animation-delay:.39s; }
-    .petal:nth-child(4){ --r: 180deg; animation-delay:.46s; }
-    .petal:nth-child(5){ --r: 240deg; animation-delay:.53s; }
-    .petal:nth-child(6){ --r: 300deg; animation-delay:.60s; }
+    .petal:nth-child(2){ --r: 0deg;   animation-delay:.25s; }
+    .petal:nth-child(3){ --r: 60deg;  animation-delay:.32s; }
+    .petal:nth-child(4){ --r: 120deg; animation-delay:.39s; }
+    .petal:nth-child(5){ --r: 180deg; animation-delay:.46s; }
+    .petal:nth-child(6){ --r: 240deg; animation-delay:.53s; }
+    .petal:nth-child(7){ --r: 300deg; animation-delay:.60s; }
 
     .center{
       position:absolute;
@@ -137,7 +160,7 @@
       transform: scaleX(-1) rotate(-10deg);
     }
 
-    /* Message typing */
+    /* Message (normal) */
     .title{
       font-size: 1.6rem;
       margin: 6px 0 10px;
@@ -145,28 +168,16 @@
     }
 
     .typed{
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       line-height: 1.6;
       margin: 0 auto;
       max-width: 46ch;
-      min-height: 3.8em;
+      min-height: 2.2em;
       padding: 6px 10px 0;
+      opacity:.9;
     }
 
-    .cursor{
-      display:inline-block;
-      width: 10px;
-      margin-left: 2px;
-      animation: blink .9s infinite;
-      transform: translateY(2px);
-    }
-
-    @keyframes blink{
-      0%,49%{ opacity:1; }
-      50%,100%{ opacity:0; }
-    }
-
-    /* Footer code love */
+    /* Code block */
     .code{
       margin-top: 14px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -178,19 +189,6 @@
       text-align:left;
       white-space: pre;
       overflow:auto;
-    }
-
-    /* Floating hearts */
-    .heart{
-      position: fixed;
-      font-size: 18px;
-      pointer-events:none;
-      animation: floatUp 1.2s ease-out forwards;
-      filter: drop-shadow(0 8px 10px rgba(0,0,0,.15));
-    }
-    @keyframes floatUp{
-      from { transform: translateY(0) scale(1); opacity:1; }
-      to   { transform: translateY(-90px) scale(1.6); opacity:0; }
     }
 
     /* Hidden surprise */
@@ -205,6 +203,71 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Floating hearts */
+    .heart{
+      position: fixed;
+      font-size: 18px;
+      pointer-events:none;
+      animation: floatUp 1.6s ease-out forwards;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.15));
+      z-index: 9998;
+    }
+    .heartLabel{
+      position: fixed;
+      font-size: 14px;
+      color: var(--text);
+      pointer-events:none;
+      animation: floatUp 1.9s ease-out forwards;
+      z-index: 9998;
+      text-shadow: 0 6px 18px rgba(0,0,0,.12);
+      max-width: 92vw;
+      text-align:center;
+      padding: 0 10px;
+    }
+    @keyframes floatUp{
+      from { transform: translateY(0) scale(1); opacity:1; }
+      to   { transform: translateY(-110px) scale(1.4); opacity:0; }
+    }
+
+    /* Fullscreen overlay */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0,0,0,.45);
+      z-index: 9999;
+      backdrop-filter: blur(6px);
+    }
+    .overlay.show{ display:flex; }
+
+    .overlay-card{
+      width: min(760px, 94vw);
+      background: rgba(255,255,255,.93);
+      border-radius: 22px;
+      padding: 22px 18px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.25);
+      text-align: center;
+    }
+    .overlay-title{
+      font-size: 1.9rem;
+      margin: 0 0 12px;
+      color: var(--text);
+    }
+    .overlay-text{
+      font-size: 1.35rem;
+      line-height: 1.6;
+      color: var(--text);
+      word-break: break-word;
+    }
+    .overlay-hint{
+      margin-top: 14px;
+      font-size: 1rem;
+      opacity: .75;
+    }
   </style>
 </head>
 
@@ -212,9 +275,12 @@
   <div class="wrap">
     <div class="card">
       <div class="stage">
-        <div class="flower" id="flower" title="Clique sur la fleur ❤️">
+        <div class="flower" id="flower" title="Clique sur moi ❤️">
+          <div class="badge">Clique sur moi 💖</div>
+
           <div class="petal"></div><div class="petal"></div><div class="petal"></div>
           <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+
           <div class="center"></div>
           <div class="stem"></div>
           <div class="leaf"></div>
@@ -223,7 +289,7 @@
       </div>
 
       <div class="title">Joyeuse Saint-Valentin ❤️</div>
-      <div class="typed" id="typed"></div>
+      <div class="typed">Tape sur la fleur pour voir ton message 💌</div>
 
       <div class="secret" id="secret">
         Bonus : <b>tu es mon “bug” préféré</b>… parce que je ne veux jamais te corriger 😇
@@ -240,71 +306,88 @@ while (monCoeur.bat()) {
 }
       </div>
 
-      <div class="hint">Astuce : clique sur la fleur pour faire apparaître des cœurs ✨</div>
+      <div class="hint">Astuce : sur iPhone, ça marche direct via un lien (GitHub Pages) 💫</div>
     </div>
   </div>
 
-<script>
-  const loveText = "Je t’aime NOULAGBESSI Akossiwa Roberta Merveille ❤️";
+  <!-- Full screen readable message -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="overlay-card">
+      <div class="overlay-title">💘 Message pour toi</div>
+      <div class="overlay-text" id="overlayText"></div>
+      <div class="overlay-hint">Tape n’importe où pour fermer</div>
+    </div>
+  </div>
 
-  const flower = document.getElementById("flower");
-  const secret = document.getElementById("secret");
+  <script>
+    const loveText = "Je t’aime NOULAGBESSI Akossiwa Roberta Merveille ❤️";
 
-  let heartInterval = null;
+    const flower = document.getElementById("flower");
+    const secret = document.getElementById("secret");
 
-  function spawnHeart(x, y){
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.textContent = "💖";
-    h.style.left = (x + Math.random()*40 - 20) + "px";
-    h.style.top  = (y + Math.random()*40 - 20) + "px";
+    const overlay = document.getElementById("overlay");
+    const overlayText = document.getElementById("overlayText");
 
-    const label = document.createElement("div");
-    label.textContent = loveText;
-    label.style.position = "fixed";
-    label.style.left = (x + Math.random()*40 - 20) + "px";
-    label.style.top  = (y + Math.random()*40 - 20) + "px";
-    label.style.fontSize = "14px";
-    label.style.color = "#6a040f";
-    label.style.pointerEvents = "none";
-    label.style.animation = "floatUp 1.8s ease-out forwards";
+    let heartInterval = null;
 
-    document.body.appendChild(h);
-    document.body.appendChild(label);
+    function spawnHeart(x, y){
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = "💖";
+      h.style.left = (x + Math.random()*50 - 25) + "px";
+      h.style.top  = (y + Math.random()*30 - 15) + "px";
 
-    setTimeout(() => { h.remove(); label.remove(); }, 1800);
-  }
+      const label = document.createElement("div");
+      label.className = "heartLabel";
+      label.textContent = loveText;
+      label.style.left = (x + Math.random()*70 - 35) + "px";
+      label.style.top  = (y + Math.random()*30 - 15) + "px";
 
-  function startInfiniteHearts(){
-    secret.classList.add("show");
-    if (heartInterval) return;
+      document.body.appendChild(h);
+      document.body.appendChild(label);
 
-    heartInterval = setInterval(() => {
-      const x = Math.random() * window.innerWidth;
+      setTimeout(() => { h.remove(); label.remove(); }, 1900);
+    }
 
-      // hauteur fiable sur mobile
-      const y = Math.max(document.documentElement.clientHeight, window.innerHeight) - 40;
+    function showOverlay(){
+      overlayText.textContent = loveText;
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden", "false");
+    }
 
-      spawnHeart(x, y);
-    }, 120);
-  }
+    function startInfiniteHearts(){
+      secret.classList.add("show");
+      showOverlay();
 
-  // ✅ Mobile + Desktop : pointer events
-  flower.addEventListener("pointerdown", (e) => {
-    e.preventDefault(); // évite le comportement tactile (zoom/double tap)
-    startInfiniteHearts();
-  }, { passive: false });
+      if (heartInterval) return;
 
-  // ✅ Fallback vieux mobiles (si jamais)
-  flower.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    startInfiniteHearts();
-  }, { passive: false });
+      heartInterval = setInterval(() => {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.max(document.documentElement.clientHeight, window.innerHeight) - 40;
+        spawnHeart(x, y);
+      }, 120);
+    }
 
-  // ✅ Desktop fallback
-  flower.addEventListener("click", startInfiniteHearts);
-</script>
+    // Close overlay on tap anywhere
+    overlay.addEventListener("pointerdown", () => {
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden", "true");
+    });
 
+    // Mobile + Desktop
+    flower.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      startInfiniteHearts();
+    }, { passive: false });
 
+    // Fallback (older iOS webviews)
+    flower.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      startInfiniteHearts();
+    }, { passive: false });
+
+    // Desktop fallback
+    flower.addEventListener("click", startInfiniteHearts);
+  </script>
 </body>
 </html>
