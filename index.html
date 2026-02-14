@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pour toi ❤️</title>
+
   <style>
     :root{
       --bg1:#ffdde1;
@@ -13,6 +14,7 @@
       --stem:#2f9e44;
       --text:#6a040f;
       --card:rgba(255,255,255,.35);
+      --white: rgba(255,255,255,.88);
     }
 
     body{
@@ -31,7 +33,7 @@
     .wrap{
       text-align:center;
       padding:24px;
-      width:min(560px, 92vw);
+      width:min(680px, 92vw);
     }
 
     .card{
@@ -39,145 +41,172 @@
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,.35);
       border-radius: 24px;
-      padding: 26px 18px;
+      padding: 26px 18px 22px;
       box-shadow: 0 20px 60px rgba(0,0,0,.15);
     }
 
     .hint{
       margin-top:10px;
       font-size:.92rem;
-      opacity:.8;
+      opacity:.85;
     }
 
-    /* Flower */
+    /* Stage */
     .stage{
       display:flex;
+      flex-direction: column;
       justify-content:center;
       align-items:center;
-      padding: 10px 0 18px;
+      padding: 6px 0 10px;
+      gap: 10px;
     }
 
     .flower{
       position: relative;
-      width: 160px;
-      height: 240px;
-      transform: scale(0);
-      animation: bloom 1.4s ease-out .2s forwards;
+      width: 170px;
+      height: 250px;
       cursor: pointer;
       user-select:none;
-      touch-action: manipulation; /* mobile friendly */
+      touch-action: manipulation;
     }
 
-    @keyframes bloom{
-      from { transform: scale(0) rotate(-10deg); filter: blur(2px); }
-      to   { transform: scale(1) rotate(0deg); filter: blur(0); }
-    }
-
-    /* Badge "Clique sur moi" */
+    /* Badge ON the flower (visible on mobile) */
     .badge{
       position:absolute;
-      top:-18px;
+      top: 10px;
       left:50%;
       transform: translateX(-50%);
-      background: rgba(255,255,255,.75);
+      background: var(--white);
       border: 1px solid rgba(255,255,255,.6);
-      padding: 6px 10px;
+      padding: 7px 12px;
       border-radius: 999px;
-      font-size: .9rem;
-      font-weight: 700;
+      font-size: 1rem;
+      font-weight: 900;
       color: var(--text);
       box-shadow: 0 10px 25px rgba(0,0,0,.12);
       animation: pop 1.2s ease-in-out infinite;
+      z-index: 50;
+      white-space: nowrap;
     }
     @keyframes pop{
       0%,100%{ transform: translateX(-50%) scale(1); }
       50%{ transform: translateX(-50%) scale(1.06); }
     }
 
-    .petal{
-      position:absolute;
-      width: 86px;
-      height: 86px;
-      background: var(--petal);
-      border-radius: 55% 45% 55% 45%;
-      top: 30px;
-      left: 37px;
-      transform-origin: center 80px;
-      opacity: 0;
-      animation: petalIn .9s ease-out forwards;
+    .tapText{
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--text);
+      opacity: .95;
     }
 
-    @keyframes petalIn{
-      from { opacity:0; transform: translateY(8px) scale(.6) rotate(var(--r)); }
-      to   { opacity:1; transform: translateY(0)  scale(1)  rotate(var(--r)); }
-    }
-
-    .petal:nth-child(2){ --r: 0deg;   animation-delay:.25s; }
-    .petal:nth-child(3){ --r: 60deg;  animation-delay:.32s; }
-    .petal:nth-child(4){ --r: 120deg; animation-delay:.39s; }
-    .petal:nth-child(5){ --r: 180deg; animation-delay:.46s; }
-    .petal:nth-child(6){ --r: 240deg; animation-delay:.53s; }
-    .petal:nth-child(7){ --r: 300deg; animation-delay:.60s; }
-
-    .center{
-      position:absolute;
-      width: 62px;
-      height: 62px;
-      background: var(--center);
-      border-radius:50%;
-      top: 62px;
-      left: 49px;
-      box-shadow: inset 0 6px 0 rgba(255,255,255,.35);
-    }
+    /* ========= STEP-BY-STEP DRAWING (NO TEXT SHOWN) ========= */
 
     .stem{
       position:absolute;
       width: 12px;
-      height: 120px;
+      height: 125px;
       background: var(--stem);
       border-radius: 10px;
-      left: 74px;
-      top: 120px;
+      left: 80px;
+      top: 128px;
       box-shadow: inset 0 6px 0 rgba(255,255,255,.18);
+      transform-origin: top;
+      transform: scaleY(0);
+      animation: drawStem .55s ease-out .15s forwards;
+    }
+    @keyframes drawStem{
+      from{ transform: scaleY(0); opacity:.6; }
+      to{ transform: scaleY(1); opacity:1; }
     }
 
     .leaf{
       position:absolute;
-      width: 70px;
-      height: 40px;
+      width: 72px;
+      height: 42px;
       background: var(--stem);
       border-radius: 70px 70px 70px 0;
-      top: 170px;
-      left: 12px;
-      transform: rotate(-18deg);
-      opacity:.95;
+      top: 180px;
+      left: 14px;
+      transform: rotate(-18deg) scale(0);
+      opacity:0;
       box-shadow: inset 0 6px 0 rgba(255,255,255,.18);
+      animation: popLeaf .45s ease-out .70s forwards;
     }
-
     .leaf.right{
-      left: 78px;
-      top: 165px;
-      transform: scaleX(-1) rotate(-10deg);
+      left: 86px;
+      top: 173px;
+      transform: scale(0) scaleX(-1) rotate(-10deg);
+      animation-delay: .82s;
+    }
+    @keyframes popLeaf{
+      from{ opacity:0; transform: rotate(-18deg) scale(0); }
+      to{ opacity:.95; transform: rotate(-18deg) scale(1); }
     }
 
-    /* Message (normal) */
+    .petal{
+      position:absolute;
+      width: 88px;
+      height: 88px;
+      background: var(--petal);
+      border-radius: 55% 45% 55% 45%;
+      top: 34px;
+      left: 41px;
+      transform-origin: center 82px;
+      opacity: 0;
+      transform: scale(.5) rotate(var(--r));
+      animation: petalIn .55s ease-out forwards;
+      animation-delay: var(--d);
+    }
+    @keyframes petalIn{
+      from { opacity:0; transform: scale(.5) rotate(var(--r)); filter: blur(1px); }
+      to   { opacity:1; transform: scale(1) rotate(var(--r)); filter: blur(0); }
+    }
+
+    .petal.p1{ --r: 0deg;   --d: 1.05s; }
+    .petal.p2{ --r: 60deg;  --d: 1.15s; }
+    .petal.p3{ --r: 120deg; --d: 1.25s; }
+    .petal.p4{ --r: 180deg; --d: 1.35s; }
+    .petal.p5{ --r: 240deg; --d: 1.45s; }
+    .petal.p6{ --r: 300deg; --d: 1.55s; }
+
+    .center{
+      position:absolute;
+      width: 64px;
+      height: 64px;
+      background: var(--center);
+      border-radius:50%;
+      top: 70px;
+      left: 54px;
+      box-shadow: inset 0 6px 0 rgba(255,255,255,.35);
+      transform: scale(0);
+      opacity:0;
+      animation: popCenter .45s ease-out 1.70s forwards;
+    }
+    @keyframes popCenter{
+      from { opacity:0; transform: scale(0); }
+      to   { opacity:1; transform: scale(1); }
+    }
+
     .title{
-      font-size: 1.6rem;
-      margin: 6px 0 10px;
+      font-size: 1.65rem;
+      margin: 10px 0 8px;
       letter-spacing:.2px;
     }
 
-    .typed{
+    /* ✅ secret with the bug sentence */
+    .secret{
+      margin-top: 10px;
       font-size: 1.05rem;
-      line-height: 1.6;
-      margin: 0 auto;
-      max-width: 46ch;
-      min-height: 2.2em;
-      padding: 6px 10px 0;
-      opacity:.9;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: .35s ease;
+    }
+    .secret.show{
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Code block */
     .code{
       margin-top: 14px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -191,46 +220,40 @@
       overflow:auto;
     }
 
-    /* Hidden surprise */
-    .secret{
-      margin-top: 10px;
-      font-size: 1.05rem;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: .35s ease;
-    }
-    .secret.show{
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Floating hearts */
+    /* Hearts + text go from bottom to top */
     .heart{
       position: fixed;
-      font-size: 18px;
+      font-size: 20px;
       pointer-events:none;
-      animation: floatUp 1.6s ease-out forwards;
+      animation-name: floatUp;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
       filter: drop-shadow(0 8px 10px rgba(0,0,0,.15));
       z-index: 9998;
     }
+
     .heartLabel{
       position: fixed;
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text);
       pointer-events:none;
-      animation: floatUp 1.9s ease-out forwards;
+      animation-name: floatUp;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
       z-index: 9998;
       text-shadow: 0 6px 18px rgba(0,0,0,.12);
       max-width: 92vw;
       text-align:center;
       padding: 0 10px;
-    }
-    @keyframes floatUp{
-      from { transform: translateY(0) scale(1); opacity:1; }
-      to   { transform: translateY(-110px) scale(1.4); opacity:0; }
+      font-weight: 800;
     }
 
-    /* Fullscreen overlay */
+    @keyframes floatUp{
+      from { transform: translateY(0) scale(1); opacity:1; }
+      to   { transform: translateY(calc(-100vh - 160px)) scale(1.35); opacity:0; }
+    }
+
+    /* Overlay */
     .overlay{
       position: fixed;
       inset: 0;
@@ -253,20 +276,32 @@
       text-align: center;
     }
     .overlay-title{
-      font-size: 1.9rem;
+      font-size: 2rem;
       margin: 0 0 12px;
       color: var(--text);
     }
     .overlay-text{
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       line-height: 1.6;
       color: var(--text);
       word-break: break-word;
+      font-weight: 900;
     }
     .overlay-hint{
       margin-top: 14px;
       font-size: 1rem;
       opacity: .75;
+    }
+    .btn{
+      margin-top: 14px;
+      display:inline-block;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(255,255,255,.6);
+      font-weight: 800;
+      cursor: pointer;
+      user-select:none;
     }
   </style>
 </head>
@@ -275,24 +310,30 @@
   <div class="wrap">
     <div class="card">
       <div class="stage">
-        <div class="flower" id="flower" title="Clique sur moi ❤️">
+        <div class="flower" id="flower" title="Tape sur moi ❤️" aria-label="Fleur">
           <div class="badge">Clique sur moi 💖</div>
 
-          <div class="petal"></div><div class="petal"></div><div class="petal"></div>
-          <div class="petal"></div><div class="petal"></div><div class="petal"></div>
-
-          <div class="center"></div>
           <div class="stem"></div>
           <div class="leaf"></div>
           <div class="leaf right"></div>
+
+          <div class="petal p1"></div>
+          <div class="petal p2"></div>
+          <div class="petal p3"></div>
+          <div class="petal p4"></div>
+          <div class="petal p5"></div>
+          <div class="petal p6"></div>
+
+          <div class="center"></div>
         </div>
+
+        <div class="tapText">👇 Tape sur la fleur</div>
       </div>
 
       <div class="title">Joyeuse Saint-Valentin ❤️</div>
-      <div class="typed">Tape sur la fleur pour voir ton message 💌</div>
 
       <div class="secret" id="secret">
-        Bonus : <b>tu es mon “bug” préféré</b>… parce que je ne veux jamais te corriger 😇
+        Merveille : <b>tu es mon “bug” préféré</b>… parce que je ne veux jamais te corriger 😇
       </div>
 
       <div class="code">
@@ -306,16 +347,16 @@ while (monCoeur.bat()) {
 }
       </div>
 
-      <div class="hint">Astuce : sur iPhone, ça marche direct via un lien (GitHub Pages) 💫</div>
+      <div class="hint">De la part de Josué Kossi A.</div>
     </div>
   </div>
 
-  <!-- Full screen readable message -->
   <div class="overlay" id="overlay" aria-hidden="true">
     <div class="overlay-card">
       <div class="overlay-title">💘 Message pour toi</div>
       <div class="overlay-text" id="overlayText"></div>
       <div class="overlay-hint">Tape n’importe où pour fermer</div>
+      <div class="btn" id="closeBtn">Fermer</div>
     </div>
   </div>
 
@@ -324,35 +365,45 @@ while (monCoeur.bat()) {
 
     const flower = document.getElementById("flower");
     const secret = document.getElementById("secret");
-
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlayText");
+    const closeBtn = document.getElementById("closeBtn");
 
     let heartInterval = null;
 
     function spawnHeart(x, y){
+      const durHeart = 2.6 + Math.random() * 1.4;
+      const durText  = durHeart + 0.3;
+
       const h = document.createElement("div");
       h.className = "heart";
       h.textContent = "💖";
       h.style.left = (x + Math.random()*50 - 25) + "px";
-      h.style.top  = (y + Math.random()*30 - 15) + "px";
+      h.style.top  = y + "px";
+      h.style.animationDuration = durHeart + "s";
 
       const label = document.createElement("div");
       label.className = "heartLabel";
       label.textContent = loveText;
-      label.style.left = (x + Math.random()*70 - 35) + "px";
-      label.style.top  = (y + Math.random()*30 - 15) + "px";
+      label.style.left = (x + Math.random()*90 - 45) + "px";
+      label.style.top  = (y + 24) + "px";
+      label.style.animationDuration = durText + "s";
 
       document.body.appendChild(h);
       document.body.appendChild(label);
 
-      setTimeout(() => { h.remove(); label.remove(); }, 1900);
+      setTimeout(() => { h.remove(); label.remove(); }, (durText * 1000) + 250);
     }
 
     function showOverlay(){
       overlayText.textContent = loveText;
       overlay.classList.add("show");
       overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function hideOverlay(){
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden", "true");
     }
 
     function startInfiniteHearts(){
@@ -363,30 +414,24 @@ while (monCoeur.bat()) {
 
       heartInterval = setInterval(() => {
         const x = Math.random() * window.innerWidth;
-        const y = Math.max(document.documentElement.clientHeight, window.innerHeight) - 40;
+        const y = Math.max(document.documentElement.clientHeight, window.innerHeight) - 10;
         spawnHeart(x, y);
-      }, 120);
+      }, 220);
     }
 
-    // Close overlay on tap anywhere
-    overlay.addEventListener("pointerdown", () => {
-      overlay.classList.remove("show");
-      overlay.setAttribute("aria-hidden", "true");
-    });
+    overlay.addEventListener("pointerdown", hideOverlay);
+    closeBtn.addEventListener("pointerdown", (e) => { e.stopPropagation(); hideOverlay(); });
 
-    // Mobile + Desktop
     flower.addEventListener("pointerdown", (e) => {
       e.preventDefault();
       startInfiniteHearts();
     }, { passive: false });
 
-    // Fallback (older iOS webviews)
     flower.addEventListener("touchstart", (e) => {
       e.preventDefault();
       startInfiniteHearts();
     }, { passive: false });
 
-    // Desktop fallback
     flower.addEventListener("click", startInfiniteHearts);
   </script>
 </body>
