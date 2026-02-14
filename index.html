@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pour toi ❤️</title>
+  <title>Pour toi AKOSS❤️</title>
 
   <style>
     :root{
@@ -51,7 +51,6 @@
       opacity:.85;
     }
 
-    /* Stage */
     .stage{
       display:flex;
       flex-direction: column;
@@ -70,7 +69,6 @@
       touch-action: manipulation;
     }
 
-    /* Badge ON the flower (visible on mobile) */
     .badge{
       position:absolute;
       top: 10px;
@@ -100,8 +98,9 @@
       opacity: .95;
     }
 
-    /* ========= STEP-BY-STEP DRAWING (NO TEXT SHOWN) ========= */
+    /* ========= SLOW STEP-BY-STEP DRAWING ========= */
 
+    /* STEM: slower + starts later */
     .stem{
       position:absolute;
       width: 12px;
@@ -113,13 +112,14 @@
       box-shadow: inset 0 6px 0 rgba(255,255,255,.18);
       transform-origin: top;
       transform: scaleY(0);
-      animation: drawStem .55s ease-out .15s forwards;
+      animation: drawStem .90s ease-out .40s forwards; /* was .55s .15s */
     }
     @keyframes drawStem{
       from{ transform: scaleY(0); opacity:.6; }
       to{ transform: scaleY(1); opacity:1; }
     }
 
+    /* LEAVES: slower + later */
     .leaf{
       position:absolute;
       width: 72px;
@@ -131,19 +131,20 @@
       transform: rotate(-18deg) scale(0);
       opacity:0;
       box-shadow: inset 0 6px 0 rgba(255,255,255,.18);
-      animation: popLeaf .45s ease-out .70s forwards;
+      animation: popLeaf .70s ease-out 1.55s forwards; /* was .45s .70s */
     }
     .leaf.right{
       left: 86px;
       top: 173px;
       transform: scale(0) scaleX(-1) rotate(-10deg);
-      animation-delay: .82s;
+      animation-delay: 1.80s; /* was .82s */
     }
     @keyframes popLeaf{
       from{ opacity:0; transform: rotate(-18deg) scale(0); }
       to{ opacity:.95; transform: rotate(-18deg) scale(1); }
     }
 
+    /* PETALS: one by one, slower cadence */
     .petal{
       position:absolute;
       width: 88px;
@@ -155,7 +156,7 @@
       transform-origin: center 82px;
       opacity: 0;
       transform: scale(.5) rotate(var(--r));
-      animation: petalIn .55s ease-out forwards;
+      animation: petalIn .80s ease-out forwards;  /* was .55s */
       animation-delay: var(--d);
     }
     @keyframes petalIn{
@@ -163,13 +164,15 @@
       to   { opacity:1; transform: scale(1) rotate(var(--r)); filter: blur(0); }
     }
 
-    .petal.p1{ --r: 0deg;   --d: 1.05s; }
-    .petal.p2{ --r: 60deg;  --d: 1.15s; }
-    .petal.p3{ --r: 120deg; --d: 1.25s; }
-    .petal.p4{ --r: 180deg; --d: 1.35s; }
-    .petal.p5{ --r: 240deg; --d: 1.45s; }
-    .petal.p6{ --r: 300deg; --d: 1.55s; }
+    /* was 1.05..1.55s ; now 2.30..3.55s */
+    .petal.p1{ --r: 0deg;   --d: 2.30s; }
+    .petal.p2{ --r: 60deg;  --d: 2.55s; }
+    .petal.p3{ --r: 120deg; --d: 2.80s; }
+    .petal.p4{ --r: 180deg; --d: 3.05s; }
+    .petal.p5{ --r: 240deg; --d: 3.30s; }
+    .petal.p6{ --r: 300deg; --d: 3.55s; }
 
+    /* CENTER: last, later */
     .center{
       position:absolute;
       width: 64px;
@@ -181,7 +184,7 @@
       box-shadow: inset 0 6px 0 rgba(255,255,255,.35);
       transform: scale(0);
       opacity:0;
-      animation: popCenter .45s ease-out 1.70s forwards;
+      animation: popCenter .70s ease-out 3.95s forwards; /* was .45s 1.70s */
     }
     @keyframes popCenter{
       from { opacity:0; transform: scale(0); }
@@ -194,7 +197,6 @@
       letter-spacing:.2px;
     }
 
-    /* ✅ secret with the bug sentence */
     .secret{
       margin-top: 10px;
       font-size: 1.05rem;
@@ -333,7 +335,7 @@
       <div class="title">Joyeuse Saint-Valentin ❤️</div>
 
       <div class="secret" id="secret">
-        Merveille : <b>tu es mon “bug” préféré</b>… parce que je ne veux jamais te corriger 😇
+        Bonus : <b>tu es mon “bug” préféré</b>… parce que je ne veux jamais te corriger 😇
       </div>
 
       <div class="code">
