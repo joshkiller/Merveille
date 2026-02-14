@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pour toi ❤️</title>
+  <style>
+    :root{
+      --bg1:#ffdde1;
+      --bg2:#ee9ca7;
+      --petal:#ff4d6d;
+      --center:#ffd166;
+      --stem:#2f9e44;
+      --text:#6a040f;
+      --card:rgba(255,255,255,.35);
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle, var(--bg1), var(--bg2));
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      overflow:hidden;
+    }
+
+    .wrap{
+      text-align:center;
+      padding:24px;
+      width:min(560px, 92vw);
+    }
+
+    .card{
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 24px;
+      padding: 26px 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    }
+
+    .hint{
+      margin-top:10px;
+      font-size:.92rem;
+      opacity:.8;
+    }
+
+    /* Flower */
+    .stage{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding: 10px 0 18px;
+    }
+
+    .flower{
+      position: relative;
+      width: 160px;
+      height: 240px;
+      transform: scale(0);
+      animation: bloom 1.4s ease-out .2s forwards;
+      cursor: pointer;
+      user-select:none;
+    }
+
+    @keyframes bloom{
+      from { transform: scale(0) rotate(-10deg); filter: blur(2px); }
+      to   { transform: scale(1) rotate(0deg); filter: blur(0); }
+    }
+
+    .petal{
+      position:absolute;
+      width: 86px;
+      height: 86px;
+      background: var(--petal);
+      border-radius: 55% 45% 55% 45%;
+      top: 30px;
+      left: 37px;
+      transform-origin: center 80px;
+      opacity: 0;
+      animation: petalIn .9s ease-out forwards;
+    }
+
+    @keyframes petalIn{
+      from { opacity:0; transform: translateY(8px) scale(.6) rotate(var(--r)); }
+      to   { opacity:1; transform: translateY(0)  scale(1)  rotate(var(--r)); }
+    }
+
+    .petal:nth-child(1){ --r: 0deg;   animation-delay:.25s; }
+    .petal:nth-child(2){ --r: 60deg;  animation-delay:.32s; }
+    .petal:nth-child(3){ --r: 120deg; animation-delay:.39s; }
+    .petal:nth-child(4){ --r: 180deg; animation-delay:.46s; }
+    .petal:nth-child(5){ --r: 240deg; animation-delay:.53s; }
+    .petal:nth-child(6){ --r: 300deg; animation-delay:.60s; }
+
+    .center{
+      position:absolute;
+      width: 62px;
+      height: 62px;
+      background: var(--center);
+      border-radius:50%;
+      top: 62px;
+      left: 49px;
+      box-shadow: inset 0 6px 0 rgba(255,255,255,.35);
+    }
+
+    .stem{
+      position:absolute;
+      width: 12px;
+      height: 120px;
+      background: var(--stem);
+      border-radius: 10px;
+      left: 74px;
+      top: 120px;
+      box-shadow: inset 0 6px 0 rgba(255,255,255,.18);
+    }
+
+    .leaf{
+      position:absolute;
+      width: 70px;
+      height: 40px;
+      background: var(--stem);
+      border-radius: 70px 70px 70px 0;
+      top: 170px;
+      left: 12px;
+      transform: rotate(-18deg);
+      opacity:.95;
+      box-shadow: inset 0 6px 0 rgba(255,255,255,.18);
+    }
+
+    .leaf.right{
+      left: 78px;
+      top: 165px;
+      transform: scaleX(-1) rotate(-10deg);
+    }
+
+    /* Message typing */
+    .title{
+      font-size: 1.6rem;
+      margin: 6px 0 10px;
+      letter-spacing:.2px;
+    }
+
+    .typed{
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin: 0 auto;
+      max-width: 46ch;
+      min-height: 3.8em;
+      padding: 6px 10px 0;
+    }
+
+    .cursor{
+      display:inline-block;
+      width: 10px;
+      margin-left: 2px;
+      animation: blink .9s infinite;
+      transform: translateY(2px);
+    }
+
+    @keyframes blink{
+      0%,49%{ opacity:1; }
+      50%,100%{ opacity:0; }
+    }
+
+    /* Footer code love */
+    .code{
+      margin-top: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: .95rem;
+      background: rgba(255,255,255,.35);
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 14px;
+      padding: 12px 12px;
+      text-align:left;
+      white-space: pre;
+      overflow:auto;
+    }
+
+    /* Floating hearts */
+    .heart{
+      position: fixed;
+      font-size: 18px;
+      pointer-events:none;
+      animation: floatUp 1.2s ease-out forwards;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.15));
+    }
+    @keyframes floatUp{
+      from { transform: translateY(0) scale(1); opacity:1; }
+      to   { transform: translateY(-90px) scale(1.6); opacity:0; }
+    }
+
+    /* Hidden surprise */
+    .secret{
+      margin-top: 10px;
+      font-size: 1.05rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: .35s ease;
+    }
+    .secret.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="stage">
+        <div class="flower" id="flower" title="Clique sur la fleur ❤️">
+          <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+          <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+          <div class="center"></div>
+          <div class="stem"></div>
+          <div class="leaf"></div>
+          <div class="leaf right"></div>
+        </div>
+      </div>
+
+      <div class="title">Joyeuse Saint-Valentin ❤️</div>
+      <div class="typed" id="typed"></div>
+
+      <div class="secret" id="secret">
+        Bonus : <b>tu es mon “bug” préféré</b>… parce que je ne veux jamais te corriger 😇
+      </div>
+
+      <div class="code">
+if (toi === maVie) {
+  amour++;
+  bonheur = Infinity;
+}
+
+while (monCoeur.bat()) {
+  penserA(toi);
+}
+      </div>
+
+      <div class="hint">Astuce : clique sur la fleur pour faire apparaître des cœurs ✨</div>
+    </div>
+  </div>
+
+<script>
+  const loveText = "Je t’aime NOULAGBESSI Akossiwa Roberta Merveille ❤️";
+
+  const flower = document.getElementById("flower");
+  const secret = document.getElementById("secret");
+
+  let heartInterval = null;
+
+  function spawnHeart(x, y){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.textContent = "💖";
+    h.style.left = (x + Math.random()*40 - 20) + "px";
+    h.style.top  = (y + Math.random()*40 - 20) + "px";
+
+    const label = document.createElement("div");
+    label.textContent = loveText;
+    label.style.position = "fixed";
+    label.style.left = (x + Math.random()*40 - 20) + "px";
+    label.style.top  = (y + Math.random()*40 - 20) + "px";
+    label.style.fontSize = "14px";
+    label.style.color = "#6a040f";
+    label.style.pointerEvents = "none";
+    label.style.animation = "floatUp 1.8s ease-out forwards";
+
+    document.body.appendChild(h);
+    document.body.appendChild(label);
+
+    setTimeout(() => { h.remove(); label.remove(); }, 1800);
+  }
+
+  function startInfiniteHearts(){
+    secret.classList.add("show");
+    if (heartInterval) return;
+
+    heartInterval = setInterval(() => {
+      const x = Math.random() * window.innerWidth;
+
+      // hauteur fiable sur mobile
+      const y = Math.max(document.documentElement.clientHeight, window.innerHeight) - 40;
+
+      spawnHeart(x, y);
+    }, 120);
+  }
+
+  // ✅ Mobile + Desktop : pointer events
+  flower.addEventListener("pointerdown", (e) => {
+    e.preventDefault(); // évite le comportement tactile (zoom/double tap)
+    startInfiniteHearts();
+  }, { passive: false });
+
+  // ✅ Fallback vieux mobiles (si jamais)
+  flower.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    startInfiniteHearts();
+  }, { passive: false });
+
+  // ✅ Desktop fallback
+  flower.addEventListener("click", startInfiniteHearts);
+</script>
+
+
+</body>
+</html>
