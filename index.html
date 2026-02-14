@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Message d'amour pour la Saint-Valentin" />
   <title>Pour toi AKOSS❤️</title>
 
   <style>
@@ -17,47 +18,199 @@
       --white: rgba(255,255,255,.88);
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body{
       margin:0;
       min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      background: radial-gradient(circle, var(--bg1), var(--bg2));
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       overflow:hidden;
       -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+
+    /* ✨ Particules d'arrière-plan */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
     }
 
     .wrap{
       text-align:center;
       padding:24px;
       width:min(680px, 92vw);
+      position: relative;
+      z-index: 1;
     }
 
     .card{
       background: var(--card);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.45);
       border-radius: 24px;
-      padding: 26px 18px 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+      padding: 32px 22px 28px;
+      box-shadow: 
+        0 20px 60px rgba(0,0,0,.15),
+        0 0 0 1px rgba(255,255,255,.2) inset;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 25px 70px rgba(0,0,0,.2),
+        0 0 0 1px rgba(255,255,255,.3) inset;
     }
 
     .hint{
-      margin-top:10px;
+      margin-top:12px;
       font-size:.92rem;
       opacity:.85;
+      font-style: italic;
     }
 
     .stage{
       display:flex;
-      flex-direction: column;
+      flex-direction: row;
       justify-content:center;
       align-items:center;
-      padding: 6px 0 10px;
-      gap: 10px;
+      padding: 6px 0 16px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* ✨ Cœur animé */
+    .animatedHeart {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .heartShape {
+      position: relative;
+      width: 100px;
+      height: 90px;
+      animation: heartBeat 1.5s ease-in-out infinite;
+      cursor: pointer;
+      filter: drop-shadow(0 8px 20px rgba(255, 77, 109, 0.4));
+      transition: transform 0.3s ease;
+    }
+
+    .heartShape:hover {
+      transform: scale(1.1);
+    }
+
+    .heartShape:active {
+      transform: scale(0.95);
+    }
+
+    .heartShape::before,
+    .heartShape::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 52px;
+      height: 80px;
+      background: linear-gradient(135deg, #ff6b85, var(--petal));
+      border-radius: 50px 50px 0 0;
+    }
+
+    .heartShape::before {
+      left: 50px;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+
+    .heartShape::after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { 
+        transform: scale(1);
+      }
+      10%, 30% { 
+        transform: scale(0.92);
+      }
+      20%, 40% { 
+        transform: scale(1.05);
+      }
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    /* Particules autour du cœur */
+    .heartParticle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--petal);
+      border-radius: 50%;
+      opacity: 0;
+      animation: heartParticleFloat 3s ease-in-out infinite;
+    }
+
+    .heartParticle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+    .heartParticle:nth-child(2) { top: 20%; right: 15%; animation-delay: 0.5s; }
+    .heartParticle:nth-child(3) { bottom: 20%; left: 15%; animation-delay: 1s; }
+    .heartParticle:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 1.5s; }
+    .heartParticle:nth-child(5) { top: 50%; left: 5%; animation-delay: 2s; }
+    .heartParticle:nth-child(6) { top: 50%; right: 5%; animation-delay: 2.5s; }
+
+    @keyframes heartParticleFloat {
+      0%, 100% {
+        opacity: 0;
+        transform: translateY(0) scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-20px) scale(1);
+      }
+    }
+
+    .heartText {
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text);
+      white-space: nowrap;
+      opacity: 0.9;
+      text-align: center;
     }
 
     .flower{
@@ -67,6 +220,22 @@
       cursor: pointer;
       user-select:none;
       touch-action: manipulation;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform;
+    }
+
+    .flower:hover {
+      transform: scale(1.05);
+    }
+
+    .flower:active {
+      transform: scale(0.95);
+    }
+
+    .flower:focus-visible {
+      outline: 3px solid var(--petal);
+      outline-offset: 8px;
+      border-radius: 50%;
     }
 
     .badge{
@@ -76,19 +245,23 @@
       transform: translateX(-50%);
       background: var(--white);
       border: 1px solid rgba(255,255,255,.6);
-      padding: 7px 12px;
+      padding: 8px 16px;
       border-radius: 999px;
       font-size: 1rem;
       font-weight: 900;
       color: var(--text);
-      box-shadow: 0 10px 25px rgba(0,0,0,.12);
-      animation: pop 1.2s ease-in-out infinite;
+      box-shadow: 
+        0 10px 25px rgba(0,0,0,.12),
+        0 0 0 1px rgba(255,255,255,.5) inset;
+      animation: pop 1.5s ease-in-out infinite;
       z-index: 50;
       white-space: nowrap;
+      pointer-events: none;
     }
+
     @keyframes pop{
-      0%,100%{ transform: translateX(-50%) scale(1); }
-      50%{ transform: translateX(-50%) scale(1.06); }
+      0%,100%{ transform: translateX(-50%) scale(1) rotate(-2deg); }
+      50%{ transform: translateX(-50%) scale(1.08) rotate(2deg); }
     }
 
     .tapText{
@@ -96,29 +269,36 @@
       font-weight: 900;
       color: var(--text);
       opacity: .95;
+      animation: bounce 2s ease-in-out infinite;
     }
 
-    /* ✅ Wrapper that we re-clone to restart flower drawing */
+    @keyframes bounce{
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
     .flowerAnim{
       position:absolute;
       inset:0;
     }
 
-    /* ========= SLOW STEP-BY-STEP DRAWING ========= */
-
     .stem{
       position:absolute;
       width: 12px;
       height: 125px;
-      background: var(--stem);
+      background: linear-gradient(to bottom, var(--stem), #1a7c37);
       border-radius: 10px;
       left: 80px;
       top: 128px;
-      box-shadow: inset 0 6px 0 rgba(255,255,255,.18);
+      box-shadow: 
+        inset 2px 0 4px rgba(255,255,255,.25),
+        inset -2px 0 4px rgba(0,0,0,.15);
       transform-origin: top;
       transform: scaleY(0);
       animation: drawStem .90s ease-out .40s forwards;
+      will-change: transform;
     }
+
     @keyframes drawStem{
       from{ transform: scaleY(0); opacity:.6; }
       to{ transform: scaleY(1); opacity:1; }
@@ -128,21 +308,26 @@
       position:absolute;
       width: 72px;
       height: 42px;
-      background: var(--stem);
+      background: linear-gradient(135deg, var(--stem), #1a7c37);
       border-radius: 70px 70px 70px 0;
       top: 180px;
       left: 14px;
       transform: rotate(-18deg) scale(0);
       opacity:0;
-      box-shadow: inset 0 6px 0 rgba(255,255,255,.18);
-      animation: popLeaf .70s ease-out 1.55s forwards;
+      box-shadow: 
+        inset 2px 2px 4px rgba(255,255,255,.2),
+        0 4px 8px rgba(0,0,0,.1);
+      animation: popLeaf .70s cubic-bezier(0.34, 1.56, 0.64, 1) 1.55s forwards;
+      will-change: transform, opacity;
     }
+
     .leaf.right{
       left: 86px;
       top: 173px;
       transform: scale(0) scaleX(-1) rotate(-10deg);
       animation-delay: 1.80s;
     }
+
     @keyframes popLeaf{
       from{ opacity:0; transform: rotate(-18deg) scale(0); }
       to{ opacity:.95; transform: rotate(-18deg) scale(1); }
@@ -152,18 +337,23 @@
       position:absolute;
       width: 88px;
       height: 88px;
-      background: var(--petal);
+      background: radial-gradient(ellipse at 30% 30%, #ff6b85, var(--petal));
       border-radius: 55% 45% 55% 45%;
       top: 34px;
       left: 41px;
       transform-origin: center 82px;
       opacity: 0;
       transform: scale(.5) rotate(var(--r));
-      animation: petalIn .80s ease-out forwards;
+      animation: petalIn .80s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
       animation-delay: var(--d);
+      box-shadow: 
+        inset 0 0 20px rgba(255,255,255,.3),
+        0 4px 12px rgba(0,0,0,.15);
+      will-change: transform, opacity;
     }
+
     @keyframes petalIn{
-      from { opacity:0; transform: scale(.5) rotate(var(--r)); filter: blur(1px); }
+      from { opacity:0; transform: scale(.5) rotate(var(--r)); filter: blur(2px); }
       to   { opacity:1; transform: scale(1) rotate(var(--r)); filter: blur(0); }
     }
 
@@ -178,85 +368,134 @@
       position:absolute;
       width: 64px;
       height: 64px;
-      background: var(--center);
+      background: radial-gradient(circle at 30% 30%, #ffe17d, var(--center));
       border-radius:50%;
       top: 70px;
       left: 54px;
-      box-shadow: inset 0 6px 0 rgba(255,255,255,.35);
+      box-shadow: 
+        inset 0 -4px 8px rgba(0,0,0,.1),
+        inset 0 4px 8px rgba(255,255,255,.4),
+        0 6px 16px rgba(0,0,0,.12);
       transform: scale(0);
       opacity:0;
-      animation: popCenter .70s ease-out 3.95s forwards;
+      animation: popCenter .70s cubic-bezier(0.34, 1.56, 0.64, 1) 3.95s forwards, pulse 2s ease-in-out 5s infinite;
+      will-change: transform, opacity;
     }
+
     @keyframes popCenter{
       from { opacity:0; transform: scale(0); }
       to   { opacity:1; transform: scale(1); }
     }
 
+    @keyframes pulse{
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
     .title{
-      font-size: 1.65rem;
-      margin: 10px 0 8px;
-      letter-spacing:.2px;
+      font-size: 1.8rem;
+      margin: 14px 0 10px;
+      letter-spacing:.3px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--text), #d00000);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .secret{
-      margin-top: 10px;
-      font-size: 1.05rem;
+      margin-top: 12px;
+      font-size: 1.1rem;
       opacity: 0;
-      transform: translateY(6px);
-      transition: .35s ease;
+      transform: translateY(10px);
+      transition: opacity .5s ease, transform .5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      line-height: 1.5;
     }
+
     .secret.show{
       opacity: 1;
       transform: translateY(0);
     }
 
     .code{
-      margin-top: 14px;
+      margin-top: 16px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size: .95rem;
-      background: rgba(255,255,255,.35);
-      border: 1px solid rgba(255,255,255,.32);
+      background: rgba(255,255,255,.45);
+      border: 1px solid rgba(255,255,255,.35);
       border-radius: 14px;
-      padding: 12px 12px;
+      padding: 14px 14px;
       text-align:left;
       white-space: pre;
       overflow:auto;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,.05);
+      transition: background 0.3s ease;
     }
 
-    /* Hearts + text go from bottom to top */
+    .code:hover {
+      background: rgba(255,255,255,.55);
+    }
+
+    /* ✨ Amélioration des cœurs et textes */
     .heart{
       position: fixed;
-      font-size: 20px;
+      font-size: 24px;
       pointer-events:none;
       animation-name: floatUp;
       animation-timing-function: ease-out;
       animation-fill-mode: forwards;
-      filter: drop-shadow(0 8px 10px rgba(0,0,0,.15));
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,.2));
       z-index: 9998;
+      will-change: transform, opacity;
     }
 
     .heartLabel{
       position: fixed;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--text);
       pointer-events:none;
       animation-name: floatUp;
       animation-timing-function: ease-out;
       animation-fill-mode: forwards;
       z-index: 9998;
-      text-shadow: 0 6px 18px rgba(0,0,0,.12);
+      text-shadow: 
+        0 2px 4px rgba(255,255,255,.8),
+        0 6px 18px rgba(0,0,0,.15);
       max-width: 92vw;
       text-align:center;
       padding: 0 10px;
-      font-weight: 800;
+      font-weight: 900;
+      will-change: transform, opacity;
     }
 
     @keyframes floatUp{
-      from { transform: translateY(0) scale(1); opacity:1; }
-      to   { transform: translateY(calc(-100vh - 160px)) scale(1.35); opacity:0; }
+      from { transform: translateY(0) scale(1) rotate(0deg); opacity:1; }
+      to   { transform: translateY(calc(-100vh - 160px)) scale(1.4) rotate(15deg); opacity:0; }
     }
 
-    /* Overlay */
+    /* ✨ Particules de clic */
+    .clickParticle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: explode 0.8s ease-out forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes explode {
+      from {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+      }
+    }
+
     .overlay{
       position: fixed;
       inset: 0;
@@ -264,59 +503,185 @@
       align-items: center;
       justify-content: center;
       padding: 18px;
-      background: rgba(0,0,0,.45);
+      background: rgba(0,0,0,.5);
       z-index: 9999;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: fadeIn 0.3s ease;
     }
-    .overlay.show{ display:flex; }
+
+    .overlay.show{ 
+      display:flex; 
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
     .overlay-card{
       width: min(760px, 94vw);
-      background: rgba(255,255,255,.93);
-      border-radius: 22px;
-      padding: 22px 18px;
-      box-shadow: 0 25px 80px rgba(0,0,0,.25);
+      background: rgba(255,255,255,.95);
+      border-radius: 24px;
+      padding: 32px 24px;
+      box-shadow: 
+        0 30px 90px rgba(0,0,0,.3),
+        0 0 0 1px rgba(255,255,255,.5) inset;
       text-align: center;
+      animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
     .overlay-title{
-      font-size: 2rem;
-      margin: 0 0 12px;
+      font-size: 2.2rem;
+      margin: 0 0 16px;
       color: var(--text);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--text), #d00000);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
+
     .overlay-text{
-      font-size: 1.45rem;
+      font-size: 1.5rem;
       line-height: 1.6;
       color: var(--text);
       word-break: break-word;
       font-weight: 900;
+      margin: 0 0 8px;
     }
+
     .overlay-hint{
-      margin-top: 14px;
+      margin-top: 18px;
       font-size: 1rem;
-      opacity: .75;
+      opacity: .7;
+      font-style: italic;
     }
+
     .btn{
-      margin-top: 14px;
+      margin-top: 18px;
       display:inline-block;
-      padding: 10px 14px;
+      padding: 12px 28px;
       border-radius: 999px;
-      background: rgba(255,255,255,.85);
-      border: 1px solid rgba(255,255,255,.6);
-      font-weight: 800;
+      background: linear-gradient(135deg, var(--petal), #ff6b85);
+      border: none;
+      color: white;
+      font-weight: 900;
+      font-size: 1.05rem;
       cursor: pointer;
       user-select:none;
+      box-shadow: 0 6px 20px rgba(255,77,109,.3);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255,77,109,.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid var(--petal);
+      outline-offset: 4px;
+    }
+
+    /* Responsive amélioré */
+    @media (max-width: 480px) {
+      .title {
+        font-size: 1.5rem;
+      }
+      
+      .overlay-title {
+        font-size: 1.8rem;
+      }
+      
+      .overlay-text {
+        font-size: 1.25rem;
+      }
+      
+      .flower {
+        width: 150px;
+        height: 220px;
+      }
+      
+      .badge {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+      }
+
+      .animatedHeart {
+        width: 140px;
+        height: 140px;
+      }
+
+      .heartShape {
+        width: 80px;
+        height: 72px;
+      }
+
+      .heartShape::before,
+      .heartShape::after {
+        width: 42px;
+        height: 64px;
+      }
+
+      .heartShape::before {
+        left: 40px;
+      }
+
+      .heartText {
+        font-size: 0.85rem;
+        bottom: -25px;
+      }
+
+      .tapText {
+        font-size: 1rem;
+      }
+
+      .stage {
+        gap: 15px;
+      }
     }
   </style>
 </head>
 
 <body>
+  <!-- ✨ Particules d'arrière-plan -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
   <div class="wrap">
     <div class="card">
       <div class="stage">
-        <div class="flower" id="flower" title="Tape sur moi ❤️" aria-label="Fleur">
-          <div class="badge">Clique sur moi 💖</div>
+        <!-- ✨ Cœur animé à gauche -->
+        <div class="animatedHeart" id="animatedHeart" role="button" tabindex="0" aria-label="Cliquez sur le cœur">
+          <div class="heartParticle"></div>
+          <div class="heartParticle"></div>
+          <div class="heartParticle"></div>
+          <div class="heartParticle"></div>
+          <div class="heartParticle"></div>
+          <div class="heartParticle"></div>
+          <div class="heartShape"></div>
+          
+        </div>
 
-          <!-- ✅ This block will be re-cloned to replay the drawing infinitely -->
+        <!-- Fleur au centre/droite -->
+        <div 
+          class="flower" 
+          id="flower" 
+          role="button"
+          tabindex="0"
+          aria-label="Cliquez sur la fleur pour révéler le message"
+        >
+          <div class="badge" aria-hidden="true">Clique sur moi 💖</div>
+
           <div class="flowerAnim" id="flowerAnim">
             <div class="stem"></div>
             <div class="leaf"></div>
@@ -332,61 +697,108 @@
             <div class="center"></div>
           </div>
         </div>
-
-        <div class="tapText">👇 Tape sur la fleur</div>
       </div>
 
-      <div class="title">Joyeuse Saint-Valentin ❤️</div>
+      
 
-      <div class="secret" id="secret">
-        Merveille : <b>tu es mon “bug” préféré</b>… parce que je ne veux jamais te corriger 😇
+      <h1 class="title">Joyeuse Saint-Valentin ❤️</h1>
+
+      <div class="secret" id="secret" role="status" aria-live="polite">
+        Merveille : <b>tu es mon "bug" préféré</b>… parce que je ne veux jamais te corriger 😇
       </div>
 
-      <div class="code">
-if (toi === maVie) {
+      <pre class="code" aria-label="Code d'amour">if (toi === maVie) {
   amour++;
   bonheur = Infinity;
 }
 
 while (monCoeur.bat()) {
   penserA(toi);
-}
-      </div>
+}</pre>
 
       <div class="hint">De la part de Josué Kossi A.</div>
     </div>
   </div>
 
-  <div class="overlay" id="overlay" aria-hidden="true">
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
     <div class="overlay-card">
-      <div class="overlay-title">💘 Message pour toi</div>
-      <div class="overlay-text" id="overlayText"></div>
-      <div class="overlay-hint">Tape n’importe où pour fermer</div>
-      <div class="btn" id="closeBtn">Fermer</div>
+      <h2 class="overlay-title" id="overlayTitle">💘 Message pour toi</h2>
+      <p class="overlay-text" id="overlayText"></p>
+      <p class="overlay-hint">Tape n'importe où pour fermer</p>
+      <button class="btn" id="closeBtn" aria-label="Fermer le message">Fermer</button>
     </div>
   </div>
 
   <script>
-    const loveText = "Je t’aime NOULAGBESSI Akossiwa Roberta Merveille ❤️";
+    // ✨ Messages d'amour variés
+    const loveMessages = [
+      "Je t'aime NOULAGBESSI Akossiwa Roberta Merveille ❤️",
+      "Tu illumines ma vie comme le soleil ☀️",
+      "Chaque jour avec toi est un cadeau 🎁",
+      "Mon cœur bat pour toi 💓",
+      "Tu es ma plus belle histoire d'amour 📖",
+      "Avec toi, tout est plus beau 🌸"
+    ];
 
     const flower = document.getElementById("flower");
+    const animatedHeart = document.getElementById("animatedHeart");
     const secret = document.getElementById("secret");
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlayText");
     const closeBtn = document.getElementById("closeBtn");
+    const particlesContainer = document.getElementById("particles");
 
     let heartInterval = null;
-
-    // ✅ Keep a mutable reference because we replace it with a clone
     let flowerAnim = document.getElementById("flowerAnim");
+    let isActive = false;
+    const MAX_HEARTS = 15; // Limite pour les performances
+    let activeHearts = 0;
 
+    // ✨ Créer des particules d'arrière-plan
+    function createBackgroundParticles() {
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement("div");
+        particle.className = "particle";
+        particle.style.left = Math.random() * 100 + "%";
+        particle.style.animationDelay = Math.random() * 20 + "s";
+        particle.style.animationDuration = (15 + Math.random() * 10) + "s";
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // ✨ Rejouer l'animation de la fleur
     function replayFlowerAnimation(){
       const clone = flowerAnim.cloneNode(true);
       flowerAnim.replaceWith(clone);
       flowerAnim = clone;
     }
 
+    // ✨ Créer des particules d'explosion au clic
+    function createClickParticles(x, y) {
+      const colors = ['#ff4d6d', '#ffd166', '#ff6b85', '#ee9ca7'];
+      for (let i = 0; i < 12; i++) {
+        const particle = document.createElement("div");
+        particle.className = "clickParticle";
+        particle.style.left = x + "px";
+        particle.style.top = y + "px";
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        
+        const angle = (i / 12) * Math.PI * 2;
+        const distance = 50 + Math.random() * 50;
+        particle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+        particle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+        
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 800);
+      }
+    }
+
+    // ✨ Générer des cœurs avec limite de performance
     function spawnHeart(x, y){
+      if (activeHearts >= MAX_HEARTS) return;
+      
+      activeHearts++;
+      
       const durHeart = 2.6 + Math.random() * 1.4;
       const durText  = durHeart + 0.3;
 
@@ -399,7 +811,8 @@ while (monCoeur.bat()) {
 
       const label = document.createElement("div");
       label.className = "heartLabel";
-      label.textContent = loveText;
+      // Message aléatoire
+      label.textContent = loveMessages[Math.floor(Math.random() * loveMessages.length)];
       label.style.left = (x + Math.random()*90 - 45) + "px";
       label.style.top  = (y + 24) + "px";
       label.style.animationDuration = durText + "s";
@@ -407,25 +820,43 @@ while (monCoeur.bat()) {
       document.body.appendChild(h);
       document.body.appendChild(label);
 
-      setTimeout(() => { h.remove(); label.remove(); }, (durText * 1000) + 250);
+      setTimeout(() => { 
+        h.remove(); 
+        label.remove(); 
+        activeHearts--;
+      }, (durText * 1000) + 250);
     }
 
     function showOverlay(){
-      overlayText.textContent = loveText;
+      overlayText.textContent = loveMessages[0]; // Message principal
       overlay.classList.add("show");
       overlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
     }
 
     function hideOverlay(){
       overlay.classList.remove("show");
       overlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
     }
 
-    function startInfiniteHearts(){
+    function startInfiniteHearts(event){
+      if (isActive) return;
+      isActive = true;
+      
+      // ✨ Créer particules d'explosion
+      if (event) {
+        const target = event.target.closest('.flower, .animatedHeart');
+        if (target) {
+          const rect = target.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          const y = rect.top + rect.height / 2;
+          createClickParticles(x, y);
+        }
+      }
+
       secret.classList.add("show");
       showOverlay();
-
-      // ✅ Replay flower drawing every time (infinite retrace)
       replayFlowerAnimation();
 
       if (heartInterval) return;
@@ -434,23 +865,60 @@ while (monCoeur.bat()) {
         const x = Math.random() * window.innerWidth;
         const y = Math.max(document.documentElement.clientHeight, window.innerHeight) - 10;
         spawnHeart(x, y);
-      }, 220);
+      }, 280); // Interval légèrement augmenté pour meilleures performances
     }
 
-    overlay.addEventListener("pointerdown", hideOverlay);
-    closeBtn.addEventListener("pointerdown", (e) => { e.stopPropagation(); hideOverlay(); });
-
-    flower.addEventListener("pointerdown", (e) => {
+    // ✨ Gestion des événements (un seul handler pour éviter duplication)
+    function handleFlowerActivation(e) {
       e.preventDefault();
-      startInfiniteHearts();
-    }, { passive: false });
+      startInfiniteHearts(e);
+    }
 
-    flower.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      startInfiniteHearts();
-    }, { passive: false });
+    // Support clavier
+    flower.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        startInfiniteHearts(e);
+      }
+    });
 
-    flower.addEventListener("click", startInfiniteHearts);
+    // Support tactile et souris
+    flower.addEventListener("pointerdown", handleFlowerActivation);
+
+    // ✨ Même interaction pour le cœur animé
+    animatedHeart.addEventListener("pointerdown", handleFlowerActivation);
+    
+    animatedHeart.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        startInfiniteHearts(e);
+      }
+    });
+
+    // Fermeture de l'overlay
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) hideOverlay();
+    });
+    
+    closeBtn.addEventListener("click", (e) => { 
+      e.stopPropagation(); 
+      hideOverlay(); 
+    });
+
+    // Support clavier pour fermer
+    overlay.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hideOverlay();
+    });
+
+    // ✨ Nettoyage à la fermeture de la page
+    window.addEventListener("beforeunload", () => {
+      if (heartInterval) {
+        clearInterval(heartInterval);
+      }
+    });
+
+    // ✨ Initialisation des particules d'arrière-plan
+    createBackgroundParticles();
   </script>
 </body>
 </html>
